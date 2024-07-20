@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Model.History;
 using Model.Saves;
 using Model.Validations;
 
@@ -15,40 +16,23 @@ namespace Model
             var validateResult = CalculatorInputValidator.Validate(input);
             if (validateResult == null)
             {
-                return AddErrorHistory(input);
+                return AddHistory(false, input);
             }
 
             var command = _calculateCommandFactory.Create(validateResult);
 
             if (command == null)
             {
-                return AddErrorHistory(input);
+                return AddHistory(false, input);
             }
 
             command.Execute();
-            return AddResultHistory(input, command.GetResult());
+            return AddHistory(true, input, command.GetResult());
         }
 
-        private HistoryItem AddResultHistory(string input, string result)
+        private HistoryItem AddHistory(bool isError, string input, string result = null)
         {
-            var history = new HistoryItem()
-            {
-                IsError = false,
-                Value = $"{input}={result}"
-            };
-
-            _history.Add(history);
-            return history;
-        }
-
-        private HistoryItem AddErrorHistory(string input)
-        {
-            var history = new HistoryItem()
-            {
-                IsError = true,
-                Value = $"{input}=ERROR"
-            };
-
+            var history = HistoryFormatter.Format(isError, input, result);
             _history.Add(history);
             return history;
         }

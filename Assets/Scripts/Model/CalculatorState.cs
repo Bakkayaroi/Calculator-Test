@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Model.History;
 using UnityEngine;
 
 namespace Model

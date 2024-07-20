@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Model
+namespace Model.History
 {
     [Serializable]
     public class HistoryItem
