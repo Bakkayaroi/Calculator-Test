@@ -16,18 +16,18 @@ namespace Model
             var validateResult = CalculatorInputValidator.Validate(input);
             if (validateResult == null)
             {
-                return AddHistory(false, input);
+                return AddHistory(true, input);
             }
 
             var command = _calculateCommandFactory.Create(validateResult);
 
             if (command == null)
             {
-                return AddHistory(false, input);
+                return AddHistory(true, input);
             }
 
             command.Execute();
-            return AddHistory(true, input, command.GetResult());
+            return AddHistory(false, input, command.GetResult());
         }
 
         private HistoryItem AddHistory(bool isError, string input, string result = null)
