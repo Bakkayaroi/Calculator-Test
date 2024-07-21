@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Model.History;
 using UnityEngine;
 
-namespace Model
+namespace Model.Saves
 {
     [Serializable]
     public class CalculatorState

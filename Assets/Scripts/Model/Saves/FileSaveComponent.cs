@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Reflection;
-using Model.History;
 using UnityEngine;
 
 namespace Model.Saves
@@ -18,13 +16,9 @@ namespace Model.Saves
             return state;
         }
 
-        public void Save(string input, List<HistoryItem> historyItems)
+        public void Save(CalculatorState state)
         {
-            File.WriteAllText(GetPath(), JsonUtility.ToJson(new CalculatorState
-            {
-                Input = input,
-                HistoryItems = historyItems
-            }));
+            File.WriteAllText(GetPath(), JsonUtility.ToJson(state));
         }
 
         private string GetPath()

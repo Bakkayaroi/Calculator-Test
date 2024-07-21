@@ -7,9 +7,17 @@ namespace Model
 {
     public class CalculatorModel
     {
-        private ISaveComponent _saveComponent = new FileSaveComponent();
-        private List<HistoryItem> _history = new();
+        public List<HistoryItem> HistoryItems => _state.HistoryItems;
+        public string Input => _state.Input;
+
+        private readonly ISaveComponent _saveComponent = new FileSaveComponent();
         private readonly CalculateCommandFactory _calculateCommandFactory = new();
+        private CalculatorState _state;
+
+        public CalculatorModel()
+        {
+            Load();
+        }
 
         public HistoryItem Calculate(string input)
         {
@@ -20,7 +28,6 @@ namespace Model
             }
 
             var command = _calculateCommandFactory.Create(validateResult);
-
             if (command == null)
             {
                 return AddHistory(true, input);
@@ -33,20 +40,19 @@ namespace Model
         private HistoryItem AddHistory(bool isError, string input, string result = null)
         {
             var history = HistoryFormatter.Format(isError, input, result);
-            _history.Add(history);
+            _state.HistoryItems.Add(history);
             return history;
         }
 
-        public CalculatorState Load()
+        private void Load()
         {
-            var state = _saveComponent.Load();
-            _history = state.HistoryItems;
-            return state;
+            _state = _saveComponent.Load();
         }
 
         public void Save(string input)
         {
-            _saveComponent.Save(input, _history);
+            _state.Input = input;
+            _saveComponent.Save(_state);
         }
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace View
 {
-    public class CalculatorView : MonoBehaviour
+    public class CalculatorView : MonoBehaviour, ICalculatorView
     {
         [SerializeField] private GameObject _errorDialog;
         [SerializeField] private TextMeshProUGUI _historyItem;

@@ -27,7 +27,6 @@ namespace Model.Validations
                 return null;
             }
 
-
             return new ValidationResult
             {
                 Operator = match.Groups[2].Value.First(),
